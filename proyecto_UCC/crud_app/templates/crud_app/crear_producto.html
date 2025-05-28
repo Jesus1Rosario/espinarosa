@@ -1,0 +1,119 @@
+{% extends 'crud_app/base.html' %}
+
+{% block contenido %}
+    <!-- Contenedor principal con fondo oscuro transparente y sombra -->
+    <div class="container mt-5" style="font-family: 'Roboto', sans-serif; background-color: rgba(0, 0, 0, 0.8); max-width: 800px; margin: 0 auto; border-radius: 12px; padding: 30px 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); animation: fadeIn 1s ease-out;">
+        
+        <h2 class="text-center text-white mb-4" style="font-size: 2rem; letter-spacing: 1px;">Crear Nuevo Producto</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Campo Nombre -->
+            <div class="form-group">
+                <label for="id_nombre" class="text-white">Nombre</label>
+                {{ form.nombre }}
+            </div>
+
+            <!-- Campo Categoría -->
+            <div class="form-group">
+                <label for="id_categoria" class="text-white">Categoría</label>
+                {{ form.categoria }}
+            </div>
+
+            <!-- Campo Descripción -->
+            <div class="form-group">
+                <label for="id_descripcion" class="text-white">Descripción</label>
+                {{ form.descripcion }}
+            </div>
+
+            <!-- Campo Precio -->
+            <div class="form-group">
+                <label for="id_precio" class="text-white">Precio</label>
+                {{ form.precio }}
+            </div>
+
+            <!-- Campo Stock -->
+            <div class="form-group">
+                <label for="id_stock" class="text-white">Stock</label>
+                {{ form.stock }}
+            </div>
+
+            <!-- Campo Imagen -->
+            <div class="form-group">
+                <label for="id_imagen" class="text-white">Imagen</label>
+                {{ form.imagen }}
+            </div>
+
+            <!-- Campo Marca -->
+            <div class="form-group">
+                <label for="id_marca" class="text-white">Marca</label>
+                {{ form.marca }}
+            </div>
+
+            <!-- Botones con separación, sombra y efectos -->
+            <div class="d-flex justify-content-between mt-4" style="gap: 15px;">
+                <button type="submit" class="btn btn-success" style="background-color: #28a745; border-color: #28a745; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; padding: 10px 20px; font-size: 1rem;">
+                    Guardar
+                </button>
+                <a href="{% url 'lista_productos' %}" class="btn btn-secondary" style="background-color: #dc3545; border-color: #dc3545; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; padding: 10px 20px; font-size: 1rem;">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Estilos personalizados con animaciones y transiciones -->
+    <style>
+        /* Efecto de aparición de la página */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Efecto Hover en botones */
+        .btn:hover {
+            transform: translateY(-5px); /* Eleva el botón ligeramente */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+        }
+
+        /* Estilo de campos de formulario con fondo oscuro */
+        .form-group input, .form-group select, .form-group textarea {
+            background-color: #333; /* Fondo oscuro */
+            color: #fff; /* Texto blanco */
+            border-radius: 8px;
+            border: 1px solid #444;
+            padding: 12px;
+            width: 100%;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        /* Estilo de los campos al hacer foco */
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #28a745; /* Color verde al hacer foco */
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.7);
+            background-color: #444; /* Fondo más claro al enfocar */
+        }
+
+        /* Sombra suave en el contenedor */
+        .container {
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3); /* Sombra suave del contenedor */
+        }
+
+        /* Estilo general del título del formulario */
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,283 @@
+{% extends 'crud_app/base.html' %}
+
+{% load filtros_personalizados %}
+
+{% block contenido %}
+    <!-- Barra Superior -->
+    <div class="barra-superior">
+        <div class="logo-container">
+            <img src="/static/img/logo.png" alt="Logo">
+            <span class="titulo">Espina de rosa - Panel de Administración</span>
+        </div>
+        <a href="{% url 'cerrar_sesion' %}" class="btn-cerrar-sesion">
+            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+        </a>
+    </div>
+
+    <!-- Contenido -->
+    <div class="contenido">
+        <!-- Encabezado Principal -->
+        <div class="encabezado-principal">
+            <h2>Lista de Productos</h2>
+            <p>Administra los productos disponibles en la tienda.</p>
+            <hr>
+        </div>
+
+        <!-- Botón Agregar -->
+        <div class="boton-agregar">
+            <a href="{% url 'crear_producto' %}" class="btn-agregar">
+                ➕ Agregar Producto
+            </a>
+        </div>
+
+        <!-- Tabla de Productos -->
+        <table class="tabla-productos">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Fecha</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                        {% else %}
+                            <span>No Imagen</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.categoria }}</td>
+                    <td>{{ producto.marca }}</td>
+                    <td>${{ producto.precio|formato_precio }}</td>
+                    <td>{{ producto.creado_el|date:"d/m/Y H:i" }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>
+                        <a href="{% url 'actualizar_producto' producto.pk %}" class="btn-editar">✏️</a>
+                        <a href="{% url 'eliminar_producto' producto.pk %}" class="btn-eliminar">✖️</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">
+                        <i class="fas fa-box-open"></i><br>
+                        No hay productos disponibles.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Estilos -->
+    <style>
+        /* Barra superior */
+        .barra-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #283593, #1e88e5);
+            padding: 6px 30px; /* Barra más baja */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            transition: background-color 0.3s ease;
+        }
+
+        .barra-superior:hover {
+            background: linear-gradient(90deg, #1565c0, #1e88e5); /* Efecto de hover */
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container img {
+            width: 30px; /* Logo más pequeño */
+            height: 30px;
+            border-radius: 50%;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2); /* Sombra al logo */
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1); /* Efecto hover en el logo */
+        }
+
+        .titulo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            font-size: 1.3em; /* Reducir tamaño */
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .titulo:hover {
+            color: #ffca28; /* Cambio de color al pasar el mouse */
+        }
+
+        .btn-cerrar-sesion {
+            color: white;
+            background-color: #e53935;
+            padding: 6px 18px;
+            text-decoration: none;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            font-size: 1.1em;
+        }
+
+        .btn-cerrar-sesion:hover {
+            background-color: #c62828;
+            transform: scale(1.05);
+        }
+
+        /* Contenido */
+        .contenido {
+            margin-top: 70px; /* Ajuste para la barra más baja */
+            padding: 0 30px;
+        }
+
+        .encabezado-principal {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .encabezado-principal h2 {
+            font-size: 2.5em;
+            color: #283593;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .encabezado-principal h2:hover {
+            transform: scale(1.05);
+            color: #ffca28; /* Color dinámico */
+        }
+
+        .encabezado-principal p {
+            color: #bbb;
+            margin-top: 5px;
+            font-size: 1.2em;
+        }
+
+        .encabezado-principal hr {
+            border: 1px solid #444;
+            width: 50%;
+            margin: 15px auto;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tabla de Productos */
+        .tabla-productos {
+            width: 100%;
+            background-color: #222;
+            color: white;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .tabla-productos th, .tabla-productos td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+            transition: background-color 0.3s ease;
+        }
+
+        .tabla-productos th {
+            background-color: #283593;
+        }
+
+        .tabla-productos tr:hover {
+            background-color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .tabla-productos img {
+            width: 80px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabla-productos td span {
+            color: #ffca28;
+        }
+
+        /* Botones de Acción */
+        .btn-editar, .btn-eliminar {
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-editar {
+            background-color: #ffca28;
+        }
+
+        .btn-editar:hover {
+            background-color: #fbc02d;
+            transform: scale(1.1);
+        }
+
+        .btn-eliminar {
+            background-color: #e53935;
+            margin-left: 10px;
+        }
+
+        .btn-eliminar:hover {
+            background-color: #d32f2f;
+            transform: scale(1.1);
+        }
+
+        .btn-agregar {
+            background: linear-gradient(90deg, #43a047, #66bb6a);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-decoration: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-agregar:hover {
+            background: linear-gradient(90deg, #388e3c, #4caf50);
+            transform: scale(1.05);
+        }
+
+        /* Sin productos */
+        .tabla-productos td[colspan="8"] {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.5em;
+            color: #f44336;
+        }
+
+        .tabla-productos td[colspan="8"] i {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}

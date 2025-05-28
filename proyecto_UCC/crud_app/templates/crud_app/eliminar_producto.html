@@ -1,0 +1,115 @@
+{% extends 'crud_app/base.html' %}
+
+{% block contenido %}
+    <!-- Encabezado -->
+    <div class="encabezado-eliminar">
+        <h2>Eliminar Producto</h2>
+        <p>¿Estás seguro de que deseas eliminar el producto "{{ producto.nombre }}"?</p>
+        <hr>
+    </div>
+
+    <!-- Formulario de Eliminación -->
+    <form method="post" class="form-eliminar">
+        {% csrf_token %}
+        
+        <div class="acciones-form">
+            <button type="submit" class="btn btn-eliminar">Eliminar</button>
+            <a href="{% url 'lista_productos' %}" class="btn btn-cancelar">Cancelar</a>
+        </div>
+    </form>
+
+    <!-- Estilos -->
+    <style>
+        /* Encabezado */
+        .encabezado-eliminar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .encabezado-eliminar h2 {
+            font-size: 2.5em;
+            color: #d32f2f;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .encabezado-eliminar h2:hover {
+            transform: scale(1.05);
+            color: #ff4081;
+        }
+
+        .encabezado-eliminar p {
+            color: #bbb;
+            margin-top: 5px;
+            font-size: 1.2em;
+        }
+
+        .encabezado-eliminar hr {
+            border: 1px solid #444;
+            width: 50%;
+            margin: 15px auto;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Formulario */
+        .form-eliminar {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        /* Botones */
+        .acciones-form {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-eliminar {
+            background: linear-gradient(90deg, #d32f2f, #f44336);
+            color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-eliminar:hover {
+            background: linear-gradient(90deg, #f55a4e, #e53935);
+            transform: scale(1.05);
+        }
+
+        .btn-cancelar {
+            background: linear-gradient(90deg, #888, #777);
+            color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cancelar:hover {
+            background: linear-gradient(90deg, #aaa, #888);
+            transform: scale(1.05);
+        }
+
+        /* Estilos Responsive */
+        @media screen and (max-width: 768px) {
+            .form-eliminar {
+                padding: 15px;
+            }
+
+            .acciones-form {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+{% endblock %}

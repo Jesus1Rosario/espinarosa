@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Estilos personalizados -->
+    <style>
+        /* Fondo con imagen */
+        body {
+            background-image: url("{% static 'img/fondologin.png' %}"); /* Imagen de fondo */
+            background-size: cover;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:rgb(250, 219, 243);            
+            color: rgb(250, 219, 243);
+            margin: 0;
+        }
+        
+
+        /* Barra superior */
+        .barra-superior {
+         background: rgba(0, 0, 0, 0.7);
+         color: white;
+         padding: 15px 20px;
+         position: fixed;
+         top: 0;
+         left: 0;
+         right: 0;
+         z-index: 1000;
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Contenido alineado */
+        .barra-contenido {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         position: relative;
+        }
+
+        /* Ícono tipo botón a la izquierda */
+        .btn-icono-inicio {
+         position: absolute;
+         left: 20px;
+         font-size: 1.5rem;
+         color: white;
+         text-decoration: none;
+         background: transparent;
+         border: none;
+         cursor: pointer;
+        }
+
+        .btn-icono-inicio:hover {
+         text-decoration: none;
+         opacity: 0.8;
+        }
+
+        /* Texto centrado */
+        .titulo-barra {
+         font-size: 1.5rem;
+         font-weight: bold;
+        }
+
+
+        /* Estilo de la tarjeta de login */
+        .card {
+            background: rgba(177, 127, 160, 0.6); /* Fondo oscuro con opacidad */
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(224, 74, 157, 0.2);
+            width: 100%;
+            max-width: 450px;
+            margin-top: 100px; /* Separación del contenedor del formulario */
+        }
+
+        /* Encabezado de la tarjeta */
+        .card-header {
+            background-color:rgb(209, 221, 248); /* Azul personalizado */
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-header i {
+            font-size: 4rem;
+            opacity: 0.9;
+        }
+
+        .card-header h2 {
+            margin-top: 15px;
+            font-weight: 700;
+            color: black; /* Texto en blanco */
+        }
+
+        /* Contenedor de formulario */
+        .card-body {
+            background: rgba(0, 0, 0, 0.7); /* Fondo oscuro y transparente */
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            text-align: center;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 1rem;
+            color: #ffffff; /* Color blanco para las letras */
+        }
+
+        .form-group .input-group {
+            justify-content: center;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        /* Campos de usuario y contraseña */
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            height: 40px; /* Reducción de la altura de los campos */
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro y transparente para los campos */
+            color: #ffffff; /* Color blanco para el texto */
+            box-shadow: none;
+        }
+
+        .input-group-text {
+            background:rgb(218, 238, 255); /* Azul personalizado */
+            border: none;
+            color: white;
+        }
+
+        .form-control:focus {
+            border-color:rgb(250, 219, 243)
+            box-shadow: 0 0 5px rgb(250, 219, 243);
+        }
+
+        /* Botón */
+        .btn-primary {
+            background:rgb(218, 238, 255); /* Azul personalizado */
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px; /* Separación entre el campo de contraseña y el botón */
+        }
+
+        .btn-primary:hover {
+            background: rgb(250, 219, 243); /* Un tono más oscuro de azul */
+            transform: scale(1.05);
+        }
+
+        /* Pie de la tarjeta (ajustado con fondo oscuro transparente) */
+        .card-footer {
+            text-align: center;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro y transparente */
+            border-top: 1px solid #ddd;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .card-footer a {
+            color:rgb(215, 235, 252); /* Azul personalizado */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animación de entrada */
+        .card {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra superior -->
+<div class="barra-superior">
+    <div class="barra-contenido">
+        <a href="{% url 'pagina_inicio' %}" class="btn-icono-inicio" title="Inicio">
+            🏠
+        </a>
+        <span class="titulo-barra">Espina de Rosa</span>
+    </div>
+</div>
+
+    <!-- Contenedor del formulario -->
+    <div class="card mt-5">
+        <!-- Encabezado -->
+        <div class="card-header">
+            <i class="bi bi-person-circle"></i>
+            <h2>Iniciar Sesión</h2> <!-- Color blanco para el texto -->
+        </div>
+        <!-- Cuerpo del formulario -->
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <!-- Usuario -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <input type="text" name="username" id="id_username" class="form-control" placeholder="Ingrese su usuario" required>
+                    </div>
+                </div>
+                <!-- Contraseña -->
+                <div class="form-group">
+                    <label for="id_password" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                        <input type="password" name="password" id="id_password" class="form-control" placeholder="Ingrese su contraseña" required>
+                    </div>
+                </div>
+                <!-- Botón -->
+                <button type="submit" class="btn btn-primary mt-4">Ingresar</button>
+            </form>
+        </div>
+        <!-- Pie -->
+        <div class="card-footer">
+            ¿No tienes cuenta? <a href="{% url 'register' %}">Regístrate aquí</a>
+        </div>
+    </div>
+</body>
+</html>

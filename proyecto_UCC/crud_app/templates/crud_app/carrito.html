@@ -1,0 +1,231 @@
+{% extends 'crud_app/base.html' %}
+
+{% load filtros_personalizados %}
+
+{% block title %}Carrito de Compras{% endblock %}
+
+{% block contenido %}
+<div class="main-bg-full" style="padding-top: 80px;">
+    <div class="container" style="max-width: 1000px; margin: 0 auto;">
+        <h2 class="text-center mb-4" style="color: #3d2c4e; font-weight: bold; letter-spacing: 2px; text-shadow: 1px 1px 10px #e0cfff;">🛒 Carrito de Compras</h2>
+        {% if carrito_items %}
+            <div class="carrito-grid">
+                {% for item in carrito_items %}
+                <div class="carrito-card">
+                    <div class="carrito-img-wrapper">
+                        {% if item.producto.imagen %}
+                            <img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.nombre }}" class="carrito-img">
+                        {% else %}
+                            <div class="carrito-img-placeholder">Sin imagen</div>
+                        {% endif %}
+                    </div>
+                    <div class="carrito-details">
+                        <h5 class="carrito-title">{{ item.producto.nombre }}</h5>
+                        <p class="carrito-precio"><strong>Precio:</strong> ${{ item.producto.precio|formato_precio }}</p>
+                        <div class="carrito-cantidad">
+                            <a href="{% url 'disminuir_cantidad' item.id %}" class="btn btn-elegant-mini" style="{% if item.cantidad <= 1 %}opacity:0.5;pointer-events:none;{% endif %}">-</a>
+                            <span class="cantidad-num">{{ item.cantidad }}</span>
+                            <a href="{% url 'aumentar_cantidad' item.id %}" class="btn btn-elegant-mini">+</a>
+                        </div>
+                        <p class="carrito-total"><strong>Total:</strong> ${{ item.producto.precio|multiplicar:item.cantidad|formato_precio }}</p>
+                        <div class="carrito-acciones">
+                            <a href="{% url 'eliminar_del_carrito' item.id %}" class="btn btn-elegant-mini btn-elegant-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <h4 class="text-right" style="font-size: 1.5em; font-weight: bold; color: #27ae60; text-shadow: 1px 1px 5px #e0cfff; margin-top: 30px;">Total: ${{ total|formato_precio }}</h4>
+            <div class="text-right mt-3">
+                <a href="{% url 'realizar_compra' %}" class="btn btn-elegant-main">
+                    <span style="font-size: 1.1em;">Proceder a la compra</span>
+                </a>
+            </div>
+        {% else %}
+            <p class="text-center" style="font-size: 1.2em; color: #e74c3c; text-shadow: 1px 1px 5px #e0cfff;">Tu carrito está vacío.</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .main-bg-full {
+        min-height: 100vh;
+        width: 100vw;
+        background: linear-gradient(135deg, #FFDCDC 0%, #FFF2EB 50%, #FFE8CD 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .main-bg-full::before, .main-bg-full::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.18;
+        z-index: 0;
+    }
+    .main-bg-full::before {
+        width: 320px; height: 320px; left: -100px; top: 60px;
+        background: radial-gradient(circle, #FFD6BA 60%, transparent 100%);
+    }
+    .main-bg-full::after {
+        width: 200px; height: 200px; right: -60px; bottom: 40px;
+        background: radial-gradient(circle, #FFDCDC 60%, transparent 100%);
+    }
+    .container {
+        position: relative;
+        z-index: 2;
+    }
+    .carrito-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 24px;
+        margin-top: 30px;
+        padding: 0 10px;
+    }
+    .carrito-card {
+        display: flex;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 16px rgba(255, 214, 186, 0.15);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+        min-height: 150px;
+        align-items: stretch;
+    }
+    .carrito-card:hover {
+        transform: translateY(-4px) scale(1.015);
+        box-shadow: 0 8px 24px rgba(255, 214, 186, 0.25);
+    }
+    .carrito-img-wrapper {
+        background: #FFF2EB;
+        padding: 18px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 110px;
+        max-width: 140px;
+    }
+    .carrito-img {
+        width: 90px;
+        height: auto;
+        max-height: 110px;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(255, 220, 220, 0.2);
+        background: #fff;
+    }
+    .carrito-img-placeholder {
+        width: 90px;
+        height: 90px;
+        background: #FFF2EB;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        color: #bbb;
+        font-size: 0.9em;
+    }
+    .carrito-details {
+        flex: 1;
+        padding: 18px 18px 18px 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .carrito-title {
+        font-size: 1.08em;
+        font-weight: bold;
+        color: #ad1457;
+        margin-bottom: 7px;
+        text-shadow: 1px 1px 8px rgba(255, 255, 255, 0.5);
+    }
+    .carrito-precio, .carrito-total {
+        font-size: 0.97em;
+        color: #ad7c63;
+        margin-bottom: 7px;
+        font-weight: 500;
+    }
+    .carrito-cantidad {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 7px;
+    }
+    .cantidad-num {
+        font-size: 1em;
+        font-weight: bold;
+        color: #ad1457;
+        min-width: 28px;
+        text-align: center;
+        background: #FFF2EB;
+        border-radius: 8px;
+        padding: 2px 7px;
+        border: 1px solid #FFD6BA;
+    }
+    .carrito-acciones {
+        margin-top: 8px;
+    }
+    .btn-elegant-mini {
+        background: #FFF2EB;
+        color: #ad7c63;
+        border: 1px solid #FFD6BA;
+        border-radius: 16px;
+        padding: 2px 12px;
+        font-weight: 500;
+        font-size: 0.92em;
+        margin: 0 2px;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+        box-shadow: 0 1px 4px rgba(255, 214, 186, 0.15);
+        text-decoration: none;
+        display: inline-block;
+    }
+    .btn-elegant-mini:hover {
+        background: #FFD6BA;
+        color: #ad1457;
+        transform: scale(1.08);
+    }
+    .btn-elegant-danger {
+        color: #fff !important;
+        background: #e57373 !important;
+        border: none !important;
+        box-shadow: 0 2px 8px rgba(229, 115, 115, 0.3);
+    }
+    .btn-elegant-danger:hover {
+        background: #c62828 !important;
+        color: #fff !important;
+    }
+    .btn-elegant-main {
+        background: linear-gradient(90deg, #FFE8CD 0%, #FFDCDC 100%);
+        color: #ad1457;
+        border: none;
+        border-radius: 22px;
+        padding: 8px 28px;
+        font-weight: bold;
+        font-size: 1.08em;
+        transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
+        box-shadow: 0 2px 12px rgba(255, 214, 186, 0.25);
+        text-decoration: none;
+        display: inline-block;
+    }
+    .btn-elegant-main:hover {
+        background: linear-gradient(90deg, #FFDCDC 0%, #FFE8CD 100%);
+        transform: scale(1.05);
+        color: #ad1457;
+    }
+    @media (max-width: 600px) {
+        .carrito-card {
+            flex-direction: column;
+            align-items: center;
+        }
+        .carrito-img-wrapper {
+            max-width: 100%;
+            min-width: 100%;
+            justify-content: center;
+        }
+        .carrito-details {
+            padding: 12px 8px;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
