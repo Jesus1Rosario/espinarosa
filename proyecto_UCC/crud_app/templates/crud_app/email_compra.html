@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Confirmación de Compra</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; color: #333;">
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);">
+        <h2 style="text-align: center; color: #27ae60;">¡Gracias por tu compra en Espina de rosa!</h2>
+        <p style="font-size: 16px;">Hola {{ usuario.first_name }},</p>
+        <p style="font-size: 16px;">Hemos recibido tu pedido correctamente. A continuación te dejamos los detalles de tu compra:</p>
+
+        <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;">
+
+        <h3 style="color: #34495e;">📦 Detalles de la compra</h3>
+        <ul style="list-style: none; padding: 0;">
+            {% for item in carrito_items %}
+                <li style="margin-bottom: 10px;">
+                    <strong>{{ item.producto.nombre }}</strong> - Cantidad: {{ item.cantidad }} - Precio: ${{ item.producto.precio }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p style="font-size: 16px;"><strong>Total:</strong> ${{ total }}</p>
+
+        <h3 style="margin-top: 30px; color: #34495e;">📍 Información de envío</h3>
+        <p><strong>Nombre y Apellido:</strong> {{ nombres }}</p>        
+        <p><strong>Teléfono:</strong> {{ telefono }}</p>
+        <p><strong>barrio:</strong> {{ barrio }}</p>
+        <p><strong>Dirección:</strong> {{ direccion }}</p>
+        <p><strong>Correo de contacto:</strong> {{ correo }}</p>
+        <p><strong>Descripción del producto:</strong> {{ descripcion }}</p>
+
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #ccc;">
+
+        <p style="font-size: 14px; color: #7f8c8d;">Este correo es una confirmación automática. Si tienes preguntas, puedes responder a este correo.</p>
+
+        <p style="text-align: center; margin-top: 30px; color: #aaa; font-size: 12px;">
+            Espina de rosa © {{ now|date:"Y" }}
+        </p>
+    </div>
+</body>
+</html>
