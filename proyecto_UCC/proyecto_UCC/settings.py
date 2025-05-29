@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crud_app', # Nuestra aplicación CRUD
     'django.contrib.humanize',
+    'cloudinary',
+    'cloudinary_storage',    
 ]
 
 MIDDLEWARE = [
@@ -159,3 +161,10 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 # Configuración de mensajes
 MESSAGE_LEVEL = messages.DEBUG
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'Root',
+    'API_KEY': '697182646692719',
+    'API_SECRET': '4tL06Aa_LWQ_X0X9ONW_M1S27yM',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
