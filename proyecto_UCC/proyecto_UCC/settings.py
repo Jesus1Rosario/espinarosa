@@ -131,10 +131,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'img'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # o una carpeta que elijas para producción
 
 # Asegúrate de tener esta línea
-STATICFILES_DIRS = [BASE_DIR / 'proyecto_UCC' / 'crud_app' / 'static']
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Asegúrate que esta carpeta exista
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
