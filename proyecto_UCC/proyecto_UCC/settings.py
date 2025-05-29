@@ -162,9 +162,10 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 MESSAGE_LEVEL = messages.DEBUG
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'Root',
-    'API_KEY': '697182646692719',
-    'API_SECRET': '4tL06Aa_LWQ_X0X9ONW_M1S27yM',
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
+
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
