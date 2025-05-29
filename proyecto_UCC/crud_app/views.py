@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 
 
+
 def pagina_inicio(request):
     return render(request, 'crud_app/inicio.html')
 

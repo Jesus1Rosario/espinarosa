@@ -6,7 +6,7 @@ class Producto(models.Model):
     descripcion = models.TextField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     creado_el = models.DateTimeField(auto_now_add=True)
-    imagen = models.ImageField(upload_to='productos/', null=True, blank=True)  # Agrega este campo
+    imagen = models.ImageField(upload_to='imagen/', null=True, blank=True)  # Agrega este campo
     categoria = models.CharField(max_length=50, default='sin categoria')
     stock = models.PositiveIntegerField(default=0)
     marca = models.CharField(max_length=50, blank=True)
