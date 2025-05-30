@@ -156,6 +156,17 @@
         {% endfor %}
         {% endif %}
     </div>
+    <script>
+        setTimeout(() => {
+         document.querySelectorAll('.alert').forEach(alert => {
+           alert.classList.remove('show');
+           alert.classList.add('fade');
+           setTimeout(() => {
+             alert.remove();
+         }, 500); // tiempo para animación fade
+        });
+       }, 1000); // espera 1 segundo antes de empezar a ocultar
+    </script>
 
     <!-- Contenido principal -->
     <div style="min-height: 80vh; margin-top: 0; padding-top: 0;">
